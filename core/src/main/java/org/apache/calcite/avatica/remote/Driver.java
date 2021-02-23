@@ -175,7 +175,7 @@ public class Driver extends UnregisteredDriver {
 
     service.apply(
         new Service.OpenConnectionRequest(conn.id,
-            Service.OpenConnectionRequest.serializeProperties(info)));
+            Service.OpenConnectionRequest.serializeProperties(conn.getInfo())));
 
     return conn;
   }

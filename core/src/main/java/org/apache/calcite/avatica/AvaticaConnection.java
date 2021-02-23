@@ -426,6 +426,10 @@ public abstract class AvaticaConnection implements Connection {
     return new Properties();
   }
 
+  public Properties getInfo() {
+    return this.info;
+  }
+
   public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
     checkOpen();
     @SuppressWarnings("unchecked")

@@ -19,6 +19,7 @@ import com.google.protobuf.gradle.ofSourceSet
 import com.google.protobuf.gradle.proto
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     `java-library`
@@ -94,6 +95,16 @@ val filterJava by tasks.registering(Sync::class) {
         }
     }
     into(javaFilteredOutput)
+}
+
+val fatJar = task("fatJar", type = Jar::class) {
+    baseName = "${project.name}-fat"
+    manifest {
+        attributes["Implementation-Title"] = "Gradle Jar File Example"
+        attributes["Implementation-Version"] = version
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks.jar.get() as CopySpec)
 }
 
 ide {
